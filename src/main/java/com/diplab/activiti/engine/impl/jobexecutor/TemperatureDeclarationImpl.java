@@ -1,7 +1,5 @@
 package com.diplab.activiti.engine.impl.jobexecutor;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import com.diplab.activiti.temperature.IsSatisfy;

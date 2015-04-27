@@ -12,20 +12,21 @@ import org.activiti.engine.delegate.JavaDelegate;
 import com.diplab.activiti.engine.impl.cfg.DipProcessEngineConfiguration;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.TemperatureEventListener;
+import com.diplab.activiti.temperature.TemperatureReceiver;
+import com.diplab.activiti.temperature.TemperatureReceiverImp;
 
 public class SchedulerTask implements JavaDelegate {
 	static List<TemperatureEventListener> listeners = Collections
 			.synchronizedList(new ArrayList<TemperatureEventListener>());
+	TemperatureReceiver receiver = new TemperatureReceiverImp();
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		System.out.println(SchedulerTask.class.getName());
 		while (true) {
 			Thread.sleep(1000);
-			List<Temperature> temperatures = ((DipProcessEngineConfiguration) ProcessEngines
-					.getDefaultProcessEngine().getProcessEngineConfiguration()
-					.getProcessEngineConfiguration()).getTemperatureService()
-					.getTemperatures();
+			List<Temperature> temperatures = new ArrayList<>();
+			temperatures.add(receiver.getTemperature()); //receive temp
 
 			for (Iterator<TemperatureEventListener> iterator = listeners
 					.iterator(); iterator.hasNext();) {

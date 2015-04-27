@@ -21,13 +21,9 @@ public class TestGreaterMode {
 				.disableSchemaValidation()
 				.disableBpmnValidation()
 				.addClasspathResource(
-						"com/diplab/activiti/temperature/process/ReadTempProcess.bpmn")
-				.addClasspathResource(
 						"com/diplab/activiti/temperature/process/SchedulerProcess.bpmn")
 				.addClasspathResource("greater.bpmn20.xml").deploy();
 
-		processEngine.getRuntimeService().startProcessInstanceByKey(
-				"ReadTempProcess");
 		processEngine.getRuntimeService().startProcessInstanceByKey(
 				"schedulerProcess");
 
