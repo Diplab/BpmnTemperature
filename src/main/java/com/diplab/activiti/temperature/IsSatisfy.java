@@ -1,8 +1,13 @@
 package com.diplab.activiti.temperature;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 public interface IsSatisfy {
-	boolean isSatisfy(Map<Date, Temperature> records);
+	
+	/**
+	 * 
+	 * @param records should be sorted Latest > Oldest
+	 * @return
+	 */
+	boolean isSatisfy(List<Temperature> records);
 }

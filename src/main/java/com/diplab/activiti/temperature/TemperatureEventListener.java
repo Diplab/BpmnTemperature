@@ -1,6 +1,6 @@
 package com.diplab.activiti.temperature;
 
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public abstract class TemperatureEventListener implements IsSatisfy {
@@ -13,7 +13,7 @@ public abstract class TemperatureEventListener implements IsSatisfy {
 	}
 
 	@Override
-	public boolean isSatisfy(Map<Date, Temperature> records) {
+	public boolean isSatisfy(List<Temperature> records) {
 		return isSatisfy.isSatisfy(records);
 	}
 
@@ -22,7 +22,7 @@ public abstract class TemperatureEventListener implements IsSatisfy {
 	 * 
 	 * @param records
 	 */
-	public abstract void activate(Map<Date, Temperature> records);
+	public abstract void activate(List<Temperature> records);
 
 	/**
 	 * After {@link #activate(Map)} is called, should trigger again if

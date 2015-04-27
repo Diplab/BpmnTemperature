@@ -1,20 +1,31 @@
 package com.diplab.activiti.temperature;
 
+import java.util.Date;
+
 public class Temperature {
 
-	private double temp;
+	private double temperature;
 
 	public double getTemperature() {
-		return temp;
+		return temperature;
 	}
 
-	public Temperature(double temp) {
-		super();
-		this.temp = temp;
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
 	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	private Date time;
 
 	@Override
 	public String toString() {
-		return String.format("T=%d", temp);
+		return String.format("%s T=%f", time.toString(), temperature);
 	}
 }
