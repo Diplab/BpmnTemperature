@@ -1,9 +1,9 @@
 package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 import org.activiti.bpmn.model.BaseElement;
+import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.impl.bpmn.parser.BpmnParse;
 import org.activiti.engine.impl.bpmn.parser.handler.AbstractBpmnParseHandler;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory;
 import com.diplab.activiti.bpmn.model.DiplabEventDefinition;
 import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationImpl;
 import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationType;
+import com.diplab.activiti.temperature.TestGreaterMode;
 import com.diplab.activiti.temperature.IsSatisfy;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.TemperatureEventListener;
 import com.diplab.activiti.temperature.delegate.SchedulerTask;
-import com.diplab.temperature.DiplabTemperature;
 
 public class DiplabEventDefinitionParserHandler extends
 		AbstractBpmnParseHandler<DiplabEventDefinition> {
@@ -38,9 +38,8 @@ public class DiplabEventDefinitionParserHandler extends
 			DiplabEventDefinition eventDefinition) {
 
 		/*
-		 * 1. prepare activity behavior
-		 * 2. prepare TemperatureEventListener
-		 * 3. add TemperatureEventListener into scheduler
+		 * 1. prepare activity behavior 2. prepare TemperatureEventListener 3.
+		 * add TemperatureEventListener into scheduler
 		 */
 
 		// 1. Behavior: go through next activity
@@ -57,6 +56,7 @@ public class DiplabEventDefinitionParserHandler extends
 				System.out.println("Temperature");
 				execution.take(execution.getActivity().getOutgoingTransitions()
 						.get(0));
+				
 
 			}
 		});
@@ -64,10 +64,10 @@ public class DiplabEventDefinitionParserHandler extends
 		/*
 		 * 2. prepare TemperatureEventListener
 		 * 
-		 * 2.1 Prepare TemperatureDeclarationType
-		 * 2.2 Use TemperatureDeclarationType.prepareIsSatisfy()
-		 * 2.3 New TemperatureEventListener with IsSatisfy
-		 * and implement activate and isEnd
+		 * 2.1 Prepare TemperatureDeclarationType 2.2 Use
+		 * TemperatureDeclarationType.prepareIsSatisfy() 2.3 New
+		 * TemperatureEventListener with IsSatisfy and implement activate and
+		 * isEnd
 		 */
 
 		TemperatureDeclarationType type;
@@ -76,14 +76,20 @@ public class DiplabEventDefinitionParserHandler extends
 			type = TemperatureDeclarationType.GREATER;
 		} else if (eventDefinition.getMode().equalsIgnoreCase("lesser")) {
 			type = TemperatureDeclarationType.LESSER;
+		} else if (eventDefinition.getMode().equalsIgnoreCase("avg_greater")) {
+			type = TemperatureDeclarationType.AVG_GREATER;
+		} else if (eventDefinition.getMode().equalsIgnoreCase("avg_lesser")) {
+			type = TemperatureDeclarationType.AVG_LESSER;
 		} else {
 			logger.warn(String.format("%s is not supportted",
 					eventDefinition.getMode()));
 			return;
 		}
 
+		int time = Integer.parseInt(eventDefinition.getTime());
+
 		TemperatureDeclarationImpl declarationImpl = new TemperatureDeclarationImpl(
-				type, condition);
+				type, condition, time);
 
 		IsSatisfy isSatisfy = declarationImpl.prepareIsSatisfy();
 		if (isSatisfy == null) {
@@ -97,8 +103,8 @@ public class DiplabEventDefinitionParserHandler extends
 				isSatisfy) {
 
 			@Override
-			public void activate(Map<Date, Temperature> records) {
-				DiplabTemperature.processEngine.getRuntimeService()
+			public void activate(List<Temperature> records) {
+				ProcessEngines.getDefaultProcessEngine().getRuntimeService()
 						.startProcessInstanceById(processDefinition.getId());
 			}
 

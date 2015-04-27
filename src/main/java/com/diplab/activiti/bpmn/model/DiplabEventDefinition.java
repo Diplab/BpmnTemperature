@@ -6,6 +6,7 @@ public class DiplabEventDefinition extends EventDefinition {
 
 	protected String mode;
 	protected String condition;
+	protected String time = "10";// defautl : 10s
 
 	public String getMode() {
 		return mode;
@@ -23,6 +24,14 @@ public class DiplabEventDefinition extends EventDefinition {
 		this.condition = condition;
 	}
 
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
 	@Override
 	public EventDefinition clone() {
 		DiplabEventDefinition clone = new DiplabEventDefinition();
@@ -34,6 +43,7 @@ public class DiplabEventDefinition extends EventDefinition {
 		super.setValues(otherDefinition);
 		setMode(otherDefinition.getMode());
 		setCondition(otherDefinition.getCondition());
+		setTime(otherDefinition.getTime());
 
 	}
 
