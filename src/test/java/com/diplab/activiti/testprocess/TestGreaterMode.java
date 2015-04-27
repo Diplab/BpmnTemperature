@@ -1,4 +1,4 @@
-package com.diplab.activiti.temperature;
+package com.diplab.activiti.testprocess;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
