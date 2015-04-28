@@ -12,10 +12,9 @@ public class ReadSmokeTask implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		SmokeReceiverImp smoke = new SmokeReceiverImp();
 		System.out.println(ReadSmokeTask.class.getName());
-		// System.out.println(smoke.getSmoke());
 		Smoke ppm = smoke.getSmoke();
-		System.out.println(ppm);
 
+		System.out.println(ppm);
 		System.out.println(execution.getVariable("lastestRecord"));
 	}
 
