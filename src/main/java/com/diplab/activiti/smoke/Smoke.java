@@ -14,6 +14,6 @@ public class Smoke {
 
 	@Override
 	public String toString() {
-		return String.format("S=%f", smoke);
+		return String.format("%f", smoke);
 	}
 }
