@@ -4,7 +4,7 @@
     <startEvent id="startevent1" name="Start">
       <diplabEventDefinition>
         <mode>greater</mode>
-        <condition>40</condition>
+        <condition>35</condition>
       </diplabEventDefinition>
     </startEvent>
     <sequenceFlow id="sequenceflow1" name="Validate order" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
@@ -12,17 +12,17 @@
     <endEvent id="endevent1" name="End"></endEvent>
     <serviceTask id="servicetask1" name="scriptTask1" activiti:class="com.diplab.activiti.temperature.delegate.ReadSmokeTask"></serviceTask>
     <sequenceFlow id="flow1" sourceRef="exclusivegateway1" targetRef="scripttask1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>150}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>100}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask1" name="User Task" scriptFormat="groovy" activiti:autoStoreVariables="false">
-      <script>out:println "123";</script>
+      <script>out:println "over100";</script>
     </scriptTask>
     <sequenceFlow id="flow2" sourceRef="scripttask1" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="scripttask2">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm<=150}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm<=100}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask2" name="User Task" scriptFormat="groovy" activiti:autoStoreVariables="false">
-     <script>out:println "456";</script>
+     <script>out:println "under100";</script>
     </scriptTask>
     <endEvent id="endevent2" name="End"></endEvent>
     <sequenceFlow id="flow4" sourceRef="scripttask2" targetRef="endevent2"></sequenceFlow>
