@@ -2,6 +2,8 @@ package com.diplab.activiti.engine.impl.jobexecutor;
 
 import java.util.List;
 
+import org.activiti.engine.ActivitiIllegalArgumentException;
+
 import com.diplab.activiti.temperature.IsSatisfy;
 import com.diplab.activiti.temperature.Temperature;
 
@@ -66,15 +68,26 @@ public class TemperatureDeclarationImpl {
 					return avg <= condition;
 				}
 			};
+		case NONE:
+			return new IsSatisfy() {
+
+				@Override
+				public boolean isSatisfy(List<Temperature> records) {
+					return true;
+				}
+			};
 		default:
-			// throw new Exception(String.format("%s is not supported",
-			// type.toString()));
-			return null;
+			throw new ActivitiIllegalArgumentException(String.format(
+					"%s is not supported", type.toString()));
 		}
 
 	}
 
 	private static double calAvg(List<Temperature> records, final int time) {
+		if (time == 0) {
+			throw new ActivitiIllegalArgumentException(
+					"time should bigger than 1 in this mode");
+		}
 		// Find record in range and avg
 		double sum = 0;
 		for (int i = 0; i < time; i++) {

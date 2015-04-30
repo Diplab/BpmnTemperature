@@ -1,4 +1,4 @@
-package com.diplab.activiti.temperature.delegate;
+package com.diplab.activiti.smoke.delegate;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -16,6 +16,7 @@ public class ReadSmokeTask implements JavaDelegate {
 		Smoke ppm = smoke.getSmoke();
 		System.out.println(ppm);
 
+		System.out.println(execution.getVariable("lastestRecord"));
 	}
 
 }

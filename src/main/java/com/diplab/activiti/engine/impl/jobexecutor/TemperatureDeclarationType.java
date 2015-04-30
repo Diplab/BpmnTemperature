@@ -1,7 +1,7 @@
 package com.diplab.activiti.engine.impl.jobexecutor;
 
 public enum TemperatureDeclarationType {
-	GREATER, LESSER, AVG_GREATER, AVG_LESSER;
+	GREATER, LESSER, AVG_GREATER, AVG_LESSER, NONE;
 
 	/**
 	 * <mode>avg_greater</mode>

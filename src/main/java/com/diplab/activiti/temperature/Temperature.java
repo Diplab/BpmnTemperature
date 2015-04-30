@@ -1,9 +1,11 @@
 package com.diplab.activiti.temperature;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Temperature {
+public class Temperature implements Serializable {
 
+	private static final long serialVersionUID = -349485433882229849L;
 	private double temperature;
 
 	public double getTemperature() {

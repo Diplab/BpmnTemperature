@@ -3,8 +3,6 @@
   <process id="bookorder" name="Order book" isExecutable="true">
     <startEvent id="startevent1" name="Start">
       <diplabEventDefinition>
-        <mode>greater</mode>
-        <condition>40</condition>
       </diplabEventDefinition>
     </startEvent>
     <sequenceFlow id="sequenceflow1" name="Validate order" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
