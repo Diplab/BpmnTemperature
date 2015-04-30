@@ -1,6 +1,8 @@
 package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.bpmn.model.BaseElement;
 import org.activiti.engine.ProcessEngines;
@@ -55,7 +57,6 @@ public class DiplabEventDefinitionParserHandler extends
 				System.out.println("Temperature");
 				execution.take(execution.getActivity().getOutgoingTransitions()
 						.get(0));
-				
 
 			}
 		});
@@ -69,23 +70,36 @@ public class DiplabEventDefinitionParserHandler extends
 		 * isEnd
 		 */
 
+		String conditionString = eventDefinition.getCondition();
+		String typeString = eventDefinition.getMode();
+		String timeString = eventDefinition.getTime();
+
 		TemperatureDeclarationType type;
-		double condition = Double.parseDouble(eventDefinition.getCondition());
-		if (eventDefinition.getMode().equalsIgnoreCase("greater")) {
+		double condition = 0;
+		int time = 1;
+
+		if (conditionString != null) {
+			condition = Double.parseDouble(eventDefinition.getCondition());
+		}
+
+		if (typeString == null) {
+			type = TemperatureDeclarationType.NONE;
+		} else if (typeString.equalsIgnoreCase("greater")) {
 			type = TemperatureDeclarationType.GREATER;
-		} else if (eventDefinition.getMode().equalsIgnoreCase("lesser")) {
+		} else if (typeString.equalsIgnoreCase("lesser")) {
 			type = TemperatureDeclarationType.LESSER;
-		} else if (eventDefinition.getMode().equalsIgnoreCase("avg_greater")) {
+		} else if (typeString.equalsIgnoreCase("avg_greater")) {
 			type = TemperatureDeclarationType.AVG_GREATER;
-		} else if (eventDefinition.getMode().equalsIgnoreCase("avg_lesser")) {
+		} else if (typeString.equalsIgnoreCase("avg_lesser")) {
 			type = TemperatureDeclarationType.AVG_LESSER;
 		} else {
-			logger.warn(String.format("%s is not supportted",
-					eventDefinition.getMode()));
+			logger.warn(String.format("%s is not supportted", typeString));
 			return;
 		}
 
-		int time = Integer.parseInt(eventDefinition.getTime());
+		if (timeString != null) {
+			time = Integer.parseInt(timeString);
+		}
 
 		TemperatureDeclarationImpl declarationImpl = new TemperatureDeclarationImpl(
 				type, condition, time);
@@ -103,8 +117,14 @@ public class DiplabEventDefinitionParserHandler extends
 
 			@Override
 			public void activate(List<Temperature> records) {
-				ProcessEngines.getDefaultProcessEngine().getRuntimeService()
-						.startProcessInstanceById(processDefinition.getId());
+				Map<String, Object> variables = new HashMap<String, Object>();
+				variables.put("records", records);
+				variables.put("lastestRecord", records.get(0));
+				ProcessEngines
+						.getDefaultProcessEngine()
+						.getRuntimeService()
+						.startProcessInstanceById(processDefinition.getId(),
+								variables);
 			}
 
 			@Override

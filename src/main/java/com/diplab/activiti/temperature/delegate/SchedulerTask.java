@@ -5,11 +5,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
-import com.diplab.activiti.engine.impl.cfg.DipProcessEngineConfiguration;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.TemperatureEventListener;
 import com.diplab.activiti.temperature.TemperatureReceiver;
