@@ -22,7 +22,7 @@ public class TestGreaterMode {
 				.disableBpmnValidation()
 				.addClasspathResource(
 						"com/diplab/activiti/temperature/process/SchedulerProcess.bpmn")
-				.addClasspathResource("greater.bpmn20.xml").deploy();
+				.addClasspathResource("testpartdemo.bpmn20.xml").deploy();
 
 		processEngine.getRuntimeService().startProcessInstanceByKey(
 				"schedulerProcess");

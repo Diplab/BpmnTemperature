@@ -11,7 +11,8 @@ public class TemperatureReceiverImp implements TemperatureReceiver {
 		}
 
 		Temperature temperature = new Temperature();
-		temperature.setTemperature(Math.random() * (45 - 30 + 1) + 30);
+		temperature.setTemperature(Math.random() * 50);
+
 		return temperature;
 	}
 }
