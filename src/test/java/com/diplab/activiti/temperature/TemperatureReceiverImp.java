@@ -1,6 +1,5 @@
 package com.diplab.activiti.temperature;
 
-import java.util.Date;
 
 public class TemperatureReceiverImp implements TemperatureReceiver {
 
@@ -12,8 +11,8 @@ public class TemperatureReceiverImp implements TemperatureReceiver {
 		}
 
 		Temperature temperature = new Temperature();
-		temperature.setTemperature(Math.random() * 50);
-		//temperature.setTime(new Date());
+		temperature.setTemperature(Math.random() * (45 - 30 + 1) + 30);
+
 		return temperature;
 	}
 }
