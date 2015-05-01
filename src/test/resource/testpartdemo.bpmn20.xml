@@ -4,18 +4,18 @@
     <startEvent id="startevent1" name="Start">
     <diplabEventDefinition>
       </diplabEventDefinition>
-      </startEvent>
+    </startEvent>
     <sequenceFlow id="sequenceflow1" sourceRef="startevent1" targetRef="exclusivegateway2"></sequenceFlow>
     <sequenceFlow id="sequenceflow2" sourceRef="servicetask1" targetRef="exclusivegateway1"></sequenceFlow>
     <serviceTask id="servicetask1" name="scriptTask1" activiti:class="com.diplab.activiti.temperature.delegate.ReadSmokeTask"></serviceTask>
     <sequenceFlow id="flow1" name="ppm&gt;=50" sourceRef="inclusivegateway1" targetRef="scripttask1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>=50}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke>=50}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask1" name="open fans" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "open fans";</script>
     </scriptTask>
     <sequenceFlow id="flow3" name="ppm&gt;=150" sourceRef="inclusivegateway1" targetRef="scripttask2">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>=150}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke>=150}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask2" name="emergency evacuation flow" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "emergency evacuation flow";</script>
@@ -25,13 +25,13 @@
     <inclusiveGateway id="inclusivegateway1" name="Inclusive Gateway"></inclusiveGateway>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow5" name="ppm&gt;=50" sourceRef="exclusivegateway1" targetRef="inclusivegateway1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>=50}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke>=50}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask3" name="open air conditioning" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "open air conditioning";</script>
     </scriptTask>
     <sequenceFlow id="flow6" name="ppm&lt;50" sourceRef="exclusivegateway1" targetRef="scripttask3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm<50}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke<50}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="endevent3" name="End"></endEvent>
     <sequenceFlow id="flow7" sourceRef="scripttask3" targetRef="endevent3"></sequenceFlow>
@@ -40,26 +40,26 @@
     <sequenceFlow id="flow9" sourceRef="inclusivegateway2" targetRef="endevent2"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow10" name="lastestRecord&gt;=35" sourceRef="exclusivegateway2" targetRef="servicetask1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord>=35}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord.temperature>=35}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow11" name="lastestRecord&lt;35 &amp;&amp; lastestRecord&gt;=25" sourceRef="exclusivegateway2" targetRef="scripttask3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord<35 && lastestRecord>=25}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord.temperature<35 && lastestRecord.temperature>=25}]]></conditionExpression>
     </sequenceFlow>
-    <scriptTask id="scripttask4" name="open heater" scriptFormat="javascript" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttask4" name="open heater" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "open heater";</script>
     </scriptTask>
-    <scriptTask id="scripttask5" name="close heater" scriptFormat="javascript" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttask5" name="close heater" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "close heater";</script>
     </scriptTask>
     <sequenceFlow id="flow12" name="lastestRecord&lt;=15" sourceRef="exclusivegateway2" targetRef="scripttask4">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord<=15}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord.temperature<=15}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow13" name="lastestRecord&lt;25 &amp;&amp; lastestRecord&gt;15" sourceRef="exclusivegateway2" targetRef="parallelgateway1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord<25 && lastestRecord>15}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${lastestRecord.temperature<25 && lastestRecord.temperature>15}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="endevent4" name="End"></endEvent>
     <sequenceFlow id="flow14" sourceRef="scripttask4" targetRef="endevent4"></sequenceFlow>
-    <scriptTask id="scripttask6" name="close air conditioning" scriptFormat="javascript" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttask6" name="close air conditioning" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "close air conditioning";</script>
     </scriptTask>
     <endEvent id="endevent6" name="End"></endEvent>
@@ -140,7 +140,7 @@
         <omgdi:waypoint x="685.0" y="41.0"></omgdi:waypoint>
         <omgdi:waypoint x="770.0" y="41.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="44.0" x="703.0" y="52.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="703.0" y="52.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
@@ -148,7 +148,7 @@
         <omgdi:waypoint x="691.0" y="128.0"></omgdi:waypoint>
         <omgdi:waypoint x="770.0" y="128.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="50.0" x="684.0" y="138.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="684.0" y="138.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
@@ -160,14 +160,14 @@
         <omgdi:waypoint x="468.0" y="85.0"></omgdi:waypoint>
         <omgdi:waypoint x="671.0" y="85.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="44.0" x="536.0" y="101.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="536.0" y="101.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
         <omgdi:waypoint x="448.0" y="105.0"></omgdi:waypoint>
         <omgdi:waypoint x="448.0" y="208.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="38.0" x="399.0" y="174.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="399.0" y="174.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">

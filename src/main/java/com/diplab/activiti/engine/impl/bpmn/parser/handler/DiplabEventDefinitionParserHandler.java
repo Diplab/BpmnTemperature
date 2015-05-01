@@ -64,7 +64,7 @@ public class DiplabEventDefinitionParserHandler extends
 				
 				Temperature lastestRecord = temp.getTemperature(); 
 				System.out.println(lastestRecord);
-				execution.setVariable("lastestRecord", Double.parseDouble(lastestRecord.toString()));
+				execution.setVariable("lastestRecord", lastestRecord);
 				execution.take(execution.getActivity().getOutgoingTransitions()
 						.get(0));
 

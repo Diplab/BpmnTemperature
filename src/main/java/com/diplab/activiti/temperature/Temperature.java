@@ -17,16 +17,16 @@ public class Temperature implements Serializable {
 		this.temperature = temperature;
 	}
 
-//	public Date getTime() {
-//		return time;
-//	}
+	public Date getTime() {
+		return time;
+	}
 
-//	public void setTime(Date time) {
-//		this.time = time;
-//	}
+	public void setTime(Date time) {
+		this.time = time;
+	}
 
 	@Override
 	public String toString() {
-		return String.format("%f", temperature);
+		return String.format("%s T=%f", time.toString(), temperature);
 	}
 }
