@@ -13,9 +13,9 @@ public class ReadSmokeTask implements JavaDelegate {
 		SmokeReceiverImp smoke = new SmokeReceiverImp();
 		System.out.println(ReadSmokeTask.class.getName());
 		Smoke ppm = smoke.getSmoke();
-
 		System.out.println(ppm);
-		System.out.println(execution.getVariable("lastestRecord"));
+		//System.out.println(execution.getVariable("lastestRecord"));
+		execution.setVariable("ppm", Double.parseDouble(ppm.toString()));
 	}
 
 }

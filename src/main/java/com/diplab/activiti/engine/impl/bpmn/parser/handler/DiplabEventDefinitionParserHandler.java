@@ -21,6 +21,7 @@ import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationType;
 import com.diplab.activiti.temperature.IsSatisfy;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.TemperatureEventListener;
+import com.diplab.activiti.temperature.TemperatureReceiverImp;
 import com.diplab.activiti.temperature.delegate.SchedulerTask;
 
 public class DiplabEventDefinitionParserHandler extends
@@ -55,6 +56,11 @@ public class DiplabEventDefinitionParserHandler extends
 			 */
 			public void execute(ActivityExecution execution) throws Exception {
 				System.out.println("Temperature");
+				TemperatureReceiverImp temp = new TemperatureReceiverImp();
+				
+				Temperature lastestRecord = temp.getTemperature(); 
+				System.out.println(lastestRecord);
+				execution.setVariable("lastestRecord", Double.parseDouble(lastestRecord.toString()));
 				execution.take(execution.getActivity().getOutgoingTransitions()
 						.get(0));
 
@@ -120,11 +126,13 @@ public class DiplabEventDefinitionParserHandler extends
 				Map<String, Object> variables = new HashMap<String, Object>();
 				variables.put("records", records);
 				variables.put("lastestRecord", records.get(0));
+				
 				ProcessEngines
 						.getDefaultProcessEngine()
 						.getRuntimeService()
 						.startProcessInstanceById(processDefinition.getId(),
 								variables);
+				
 			}
 
 			@Override

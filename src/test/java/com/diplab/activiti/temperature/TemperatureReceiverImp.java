@@ -13,7 +13,7 @@ public class TemperatureReceiverImp implements TemperatureReceiver {
 
 		Temperature temperature = new Temperature();
 		temperature.setTemperature(Math.random() * 50);
-		temperature.setTime(new Date());
+		//temperature.setTime(new Date());
 		return temperature;
 	}
 }
