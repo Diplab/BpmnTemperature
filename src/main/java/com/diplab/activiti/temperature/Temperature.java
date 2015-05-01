@@ -7,6 +7,7 @@ public class Temperature implements Serializable {
 
 	private static final long serialVersionUID = -349485433882229849L;
 	private double temperature;
+	private Date time = new Date();
 
 	public double getTemperature() {
 		return temperature;
@@ -23,8 +24,6 @@ public class Temperature implements Serializable {
 	public void setTime(Date time) {
 		this.time = time;
 	}
-
-	private Date time;
 
 	@Override
 	public String toString() {
