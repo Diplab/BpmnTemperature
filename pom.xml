@@ -64,6 +64,24 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<additionalClasspathElements>
+						<additionalClasspathElement>src/main/resource</additionalClasspathElement>
+						<additionalClasspathElement>src/test/resource</additionalClasspathElement>
+					</additionalClasspathElements>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
@@ -84,15 +102,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<testSourceDirectory>
-			src/test/java
-		</testSourceDirectory>
-		<testResources>
-			<testResource>
-				<directory>
-					src/test/resource
-				</directory>
-			</testResource>
-		</testResources>
 	</build>
 </project>

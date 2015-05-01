@@ -1,21 +1,20 @@
 package com.diplab.activiti.temperature.delegate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
+import com.diplab.activiti.engine.impl.bpmn.parser.handler.DiplabEventDefinitionParserHandler;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.TemperatureEventListener;
 import com.diplab.activiti.temperature.TemperatureReceiver;
 import com.diplab.activiti.temperature.TemperatureReceiverImp;
 
 public class SchedulerTask implements JavaDelegate {
-	static List<TemperatureEventListener> listeners = Collections
-			.synchronizedList(new ArrayList<TemperatureEventListener>());
+	static List<TemperatureEventListener> listeners = DiplabEventDefinitionParserHandler.listeners;
 	TemperatureReceiver receiver = new TemperatureReceiverImp();
 
 	@Override
@@ -24,7 +23,7 @@ public class SchedulerTask implements JavaDelegate {
 		while (true) {
 			Thread.sleep(1000);
 			List<Temperature> temperatures = new ArrayList<>();
-			temperatures.add(receiver.getTemperature()); //receive temp
+			temperatures.add(receiver.getTemperature()); // receive temp
 
 			for (Iterator<TemperatureEventListener> iterator = listeners
 					.iterator(); iterator.hasNext();) {

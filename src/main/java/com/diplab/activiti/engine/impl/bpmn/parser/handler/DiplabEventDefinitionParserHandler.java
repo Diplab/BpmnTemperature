@@ -1,5 +1,7 @@
 package com.diplab.activiti.engine.impl.bpmn.parser.handler;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,6 @@ import com.diplab.activiti.engine.impl.jobexecutor.TemperatureDeclarationType;
 import com.diplab.activiti.temperature.IsSatisfy;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.TemperatureEventListener;
-import com.diplab.activiti.temperature.delegate.SchedulerTask;
 
 public class DiplabEventDefinitionParserHandler extends
 		AbstractBpmnParseHandler<DiplabEventDefinition> {
@@ -29,6 +30,8 @@ public class DiplabEventDefinitionParserHandler extends
 	private static final Logger logger = LoggerFactory
 			.getLogger(DiplabEventDefinitionParserHandler.class);
 
+	public static List<TemperatureEventListener> listeners = Collections
+			.synchronizedList(new ArrayList<TemperatureEventListener>());
 	@Override
 	protected Class<? extends BaseElement> getHandledType() {
 		return DiplabEventDefinition.class;
@@ -134,7 +137,7 @@ public class DiplabEventDefinitionParserHandler extends
 		};
 
 		// 3. schedule
-		SchedulerTask.addTemperatureEventListener(listener);
+		listeners.add(listener);
 
 	}
 }
