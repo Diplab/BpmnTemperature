@@ -7,15 +7,15 @@
     </startEvent>
     <sequenceFlow id="sequenceflow1" sourceRef="startevent1" targetRef="exclusivegateway2"></sequenceFlow>
     <sequenceFlow id="sequenceflow2" sourceRef="servicetask1" targetRef="exclusivegateway1"></sequenceFlow>
-    <serviceTask id="servicetask1" name="scriptTask1" activiti:class="com.diplab.activiti.temperature.delegate.ReadSmokeTask"></serviceTask>
+    <serviceTask id="servicetask1" name="scriptTask1" activiti:class="com.diplab.activiti.smoke.delegate.ReadSmokeTask"></serviceTask>
     <sequenceFlow id="flow1" name="ppm&gt;=50" sourceRef="inclusivegateway1" targetRef="scripttask1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke>=50}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>=50}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask1" name="open fans" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "open fans";</script>
     </scriptTask>
     <sequenceFlow id="flow3" name="ppm&gt;=150" sourceRef="inclusivegateway1" targetRef="scripttask2">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke>=150}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>=150}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask2" name="emergency evacuation flow" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "emergency evacuation flow";</script>
@@ -25,13 +25,13 @@
     <inclusiveGateway id="inclusivegateway1" name="Inclusive Gateway"></inclusiveGateway>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow5" name="ppm&gt;=50" sourceRef="exclusivegateway1" targetRef="inclusivegateway1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke>=50}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm>=50}]]></conditionExpression>
     </sequenceFlow>
     <scriptTask id="scripttask3" name="open air conditioning" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>out:println "open air conditioning";</script>
     </scriptTask>
     <sequenceFlow id="flow6" name="ppm&lt;50" sourceRef="exclusivegateway1" targetRef="scripttask3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm.smoke<50}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ppm<50}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="endevent3" name="End"></endEvent>
     <sequenceFlow id="flow7" sourceRef="scripttask3" targetRef="endevent3"></sequenceFlow>
