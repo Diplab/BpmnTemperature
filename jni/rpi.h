@@ -19,3 +19,22 @@ JNIEXPORT jdouble JNICALL Java_com_diplab_activiti_smoke_RpiSmokeReceiver_getSmo
 }
 #endif
 #endif
+/* Header for class com_diplab_activiti_temperature_RpiTemperatureReceiver */
+
+#ifndef _Included_com_diplab_activiti_temperature_RpiTemperatureReceiver
+#define _Included_com_diplab_activiti_temperature_RpiTemperatureReceiver
+#ifdef __cplusplus
+extern "C" {
+#endif
+/*
+ * Class:     com_diplab_activiti_temperature_RpiTemperatureReceiver
+ * Method:    getTemperatureCelsius
+ * Signature: ()D
+ */
+JNIEXPORT jdouble JNICALL Java_com_diplab_activiti_temperature_RpiTemperatureReceiver_getTemperatureCelsius
+  (JNIEnv *, jclass);
+
+#ifdef __cplusplus
+}
+#endif
+#endif

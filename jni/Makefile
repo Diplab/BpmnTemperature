@@ -1,11 +1,14 @@
 # Define a virtual path for .class in the bin directory
 vpath %.class CLASS_PATH = ../target/classes  ../target/test-classes
 
+CLASS += com.diplab.activiti.smoke.RpiSmokeReceiver
+CLASS += com.diplab.activiti.temperature.RpiTemperatureReceiver
+
 # $* matches the target filename without the extension
 rpi.h: com/diplab/activiti/smoke/RpiSmokeReceiver.class
 	javah -cp ../target/classes:../target/test-classes \
 		-o rpi.h \
-		com.diplab.activiti.smoke.RpiSmokeReceiver
+		$(CLASS)
 
 # Mac
 #-I/System/Library/Frameworks/JavaVM.framework/Headers \

@@ -14,7 +14,7 @@ JAVA_FLAG += -Djava.library.path=./jni
 .PHONY: testNone testCompile clean copydependency
 
 clean:
-	mvn clean
+	mv -rf target/*classes
 
 testCompile:
 	mvn test-compile
@@ -30,7 +30,12 @@ testNone: testCompile copydependency
 testRpi:
 	java -cp $(subst $(SPACE),:,$(CLASSPATH)) \
 		$(JAVA_FLAG) \
-		com.diplab.activiti.smoke.RpiSmokeReceiverTest
+		com.diplab.rpi.RpiReceiverTest
+
+testProcess:
+	java -cp $(subst $(SPACE),:,$(CLASSPATH)) \
+		$(JAVA_FLAG) \
+		com.diplab.activiti.testprocess.TestGreaterMode
 
 compile: testCompile
 	make -C jni libRpi.jnilib

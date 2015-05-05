@@ -8,14 +8,14 @@ import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
 import com.diplab.activiti.engine.impl.bpmn.parser.handler.DiplabEventDefinitionParserHandler;
+import com.diplab.activiti.temperature.RpiTemperatureReceiver;
 import com.diplab.activiti.temperature.Temperature;
 import com.diplab.activiti.temperature.TemperatureEventListener;
 import com.diplab.activiti.temperature.TemperatureReceiver;
-import com.diplab.activiti.temperature.TemperatureReceiverImp;
 
 public class SchedulerTask implements JavaDelegate {
 	static List<TemperatureEventListener> listeners = DiplabEventDefinitionParserHandler.listeners;
-	TemperatureReceiver receiver = new TemperatureReceiverImp();
+	TemperatureReceiver receiver = new RpiTemperatureReceiver();
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
