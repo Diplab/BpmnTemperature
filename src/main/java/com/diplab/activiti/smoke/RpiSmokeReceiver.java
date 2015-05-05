@@ -14,9 +14,12 @@ public class RpiSmokeReceiver implements SmokeReceiver {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
+		
 		Smoke smoke = new Smoke();
 		smoke.setSmoke(getSmokePpm());
+		
+		System.out.println(smoke);
+		
 		return smoke;
 	}
 

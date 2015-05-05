@@ -11,34 +11,32 @@ CLASSPATH += src/main/resource
 
 JAVA_FLAG += -Djava.library.path=./jni
 
-.PHONY: testNone testCompile clean copydependency
+.PHONY: clean environment testRpi testNone testProcess
 
 clean:
-	mv -rf target/*classes
+	rm -rf target/*classes target/libRpi.*
 
-testCompile:
+environment:
 	mvn test-compile
-
-copydependency:
 	mvn dependency:copy-dependencies
+	make -C jni libRpi.jnilib
+
 #mvn exec:java -Dexec.classpathScope=test -Dexec.mainClass=com.diplab.activiti.testprocess.TestNoneMode
 
-testNone: testCompile copydependency
+testNone: 
 	java -cp $(subst $(SPACE),:,$(CLASSPATH)) \
+		$(JAVA_FLAG) \
 		com.diplab.activiti.testprocess.TestNoneMode
 
-testRpi:
+testRpi: 
 	java -cp $(subst $(SPACE),:,$(CLASSPATH)) \
 		$(JAVA_FLAG) \
 		com.diplab.rpi.RpiReceiverTest
 
-testProcess:
+testProcess: 
 	java -cp $(subst $(SPACE),:,$(CLASSPATH)) \
 		$(JAVA_FLAG) \
 		com.diplab.activiti.testprocess.TestGreaterMode
-
-compile: testCompile
-	make -C jni libRpi.jnilib
 
 test:
 	@echo 

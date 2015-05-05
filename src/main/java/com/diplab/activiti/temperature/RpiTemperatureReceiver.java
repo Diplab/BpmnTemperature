@@ -15,6 +15,8 @@ public class RpiTemperatureReceiver implements TemperatureReceiver{
 		Temperature temp = new Temperature();
 		temp.setTemperature(getTemperatureCelsius());
 		temp.setTime(new Date());
+		
+		System.out.println(temp);
 		return temp;
 	}
 
