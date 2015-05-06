@@ -1,5 +1,5 @@
-JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home
-
+#JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home
+JAVA_HOME = /usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 
@@ -16,11 +16,17 @@ JAVA_FLAG += -Djava.library.path=./jni
 clean:
 	rm -rf target/*classes target/libRpi.*
 
-environment:
+environment_Mac:
 	mvn test-compile
 	mvn dependency:copy-dependencies
 	make -C jni libRpi.jnilib
 
+environment_RPi:
+	mvn test-compile
+	mvn dependency:copy-dependencies
+	make -C jni libRpi.jnilib
+	make -C jni libRpi.so
+	
 #mvn exec:java -Dexec.classpathScope=test -Dexec.mainClass=com.diplab.activiti.testprocess.TestNoneMode
 
 testNone: 

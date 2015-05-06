@@ -1,6 +1,8 @@
 # Define a virtual path for .class in the bin directory
 vpath %.class CLASS_PATH = ../target/classes  ../target/test-classes
 
+JAVA_HOME=/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt
+
 CLASS += com.diplab.activiti.smoke.RpiSmokeReceiver
 CLASS += com.diplab.activiti.temperature.RpiTemperatureReceiver
 
@@ -18,12 +20,13 @@ libRpi.jnilib: rpi.h rpi.c
 		-I $(JAVA_HOME)/include \
 		-I $(JAVA_HOME)/include/darwin/ \
 		rpi.c
+# linux
 
 libRpi.so:	rpi.h rpi.c
-	# Linux
 	gcc -o libRpi.so -lc -shared -fPIC \
 		-I $(JAVA_HOME)/include \
 		-I $(JAVA_HOME)/include/linux/ \
+		-lwiringPi -lm
 		rpi.c
 
 
